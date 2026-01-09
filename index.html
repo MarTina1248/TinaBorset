@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TinaBorset – Le Borsette di Martina</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f9f7f3;
+    margin: 0;
+    padding: 0;
+    color: #3a2f28;
+    scroll-behavior: smooth;
+}
+
+header {
+    text-align: center;
+    padding: 30px 15px 15px;
+    background-color: #e8dfd3;
+    border-bottom: 1px solid #d6c9b8;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    margin: 0;
+}
+
+.tina {
+    font-weight: normal;
+    color: #8c5d3c;
+}
+
+.borset {
+    font-style: italic;
+    color: #d6bfa3;
+}
+
+nav {
+    margin-top: 10px;
+
+}
+
+nav a {
+  color: #6b4f3a;           /* colore del testo */
+  text-decoration: none;     
+  margin: 0 12px;            
+  font-weight: 500;          
+  font-size: 0.95em;         
+  padding: 0 12px;           
+  border-right: 1px solid #6b4f3a; /* barretta tra i link */
+  transition: color 0.2s;
+}
+
+nav a:last-child {
+  border-right: none;        /* nessuna barra sull’ultimo link */
+}
+
+nav a:hover {
+  color: #4a3325;
+}
+
+header p {
+    margin: 8px 0 0;
+    font-style: italic;
+    color: #7b6a58;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 60px 20px;
+}
+
+.borsa {
+    background: white;
+    border: 1px solid #ddd0c1;
+    border-radius: 12px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 1s ease;
+    padding-bottom: 15px;
+    opacity: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.borsa.visible {
+    opacity: 1;
+}
+
+.borsa:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Carosello immagini */
+.carousel {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 5px;
+    position:relative;
+    width:100%;
+    height:240px;
+    display:flex;
+    align-items: center;
+}
+
+.carousel img {
+      width: 100%;
+      display: none;
+      transition: transform 0.3s;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+
+}
+
+.carousel img.active {
+    display: block;
+}
+
+.carousel-buttons {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.carousel-buttons button {
+    background: rgba(107,79,58,0.7);
+    color: white;
+    border: none;
+    font-size: 1em;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.borsa h3 {
+    margin: 8px 0 4px;
+    font-family: 'Playfair display', cursive;
+    font-style: italic;
+    font-size: 0.9em;
+    color: #6b4f3a;
+    min-height:60px;
+    line-height: 1.3;
+}
+
+.borsa-ultima h3 {
+    min-height: 110pxpx;
+    margin-bottom: 15px;
+}
+
+.normal-text {
+  font-style: normal;
+  font-weight: normal;
+  font-size:0.85em;
+  color:#7b6a58;
+  display: block;     
+  padding-top: 10px;
+}
+
+.borsa p {
+    margin: 0 0 10px;
+    font-size: 0.9em;
+    font-style: normal;
+    color: #5a3e2b;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #7b5c43;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.85em;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #5a3e2b;
+}
+
+.chi-sono {
+    background-color: #f3ede6;
+    padding: 60px 25px;
+    text-align: center;
+    border-top: 1px solid #ddd0c1;
+    border-bottom: 1px solid #ddd0c1;
+}
+
+.chi-sono h2 {
+    font-family: 'Playfair Display', serif;
+    color: #6b4f3a;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.chi-sono p {
+    max-width: 650px;
+    margin: 0 auto;
+    font-size: 1.05em;
+    line-height: 1.6em;
+    color: #4b3a2a;
+    white-space: pre-line;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background-color: #e8dfd3;
+}
+
+.contatti a {
+    display: inline-block;
+    margin: 8px 10px;
+    padding: 10px 18px;
+    background-color: #6b4f3a;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.contatti a:hover {
+    background-color: #4a3325;
+}
+
+@media (max-width: 600px) {
+    nav a {
+        display: inline-block;
+        margin: 6px;
+        font-size: 0.75em;
+    }
+    .gallery {
+        padding: 40px 10px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo"><span class="tina">Tina</span><span class="borset">Borset</span></div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#borse">Le mie borse</a>
+      <a href="#chi-sono">Chi sono</a>
+      <a href="#contatti">Contatti</a>
+  </div
+    </nav>
+    <p>Le borsette artigianali di Martina 🤎</p>
+</header>
+
+<section id="home"></section>
+
+<section id="borse" class="gallery">
+
+<!-- Ripeti questa struttura per tutte e 6 le borse -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa1a.jpg" class="active" alt="Clutch bag verde scuro lato 1">
+    <img src="borsa1b.jpg" alt="Clutch bag verde scuro lato 2">
+    <img src="borsa1c.jpg" alt="Clutch bag verde scuro lato 3">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag verde scuro con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag Verdone." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 2 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa2a.jpg" class="active" alt="Clutch bag bordeaux lato 1">
+    <img src="borsa2b.jpg" alt="Clutch bag bordeaux lato 2">
+    <img src="borsa2c.jpg" alt="Clutch bag bordeaux lato 3">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag bordeaux con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag bordeaux." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 4 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa4a.jpg" class="active" alt="Clutch bag prugna lato 1">
+    <img src="borsa4b.jpg" alt="Clutch bag prugna lato 2">
+    <img src="borsa4c.jpg" alt="Clutch bag prugna lato 3">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag prugna con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag prugna." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 5 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa5a.jpg" class="active" alt="Clutch bag rosa cipria lato 1">
+    <img src="borsa5b.jpg" alt="Clutch bag rosa cipria lato 2">
+    <img src="borsa5c.jpg" alt="Clutch bag rosa cipria lato 3">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag rosa cipria con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag rosa cipria." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 6 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa6a.jpg" class="active" alt="Clutch bag cioccolato lato 1">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag cioccolato con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag cioccolato." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 7 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa7a.jpg" class="active" alt="Clutch bag verde chiaro lato 1">
+    <img src="borsa7b.jpg" alt="Clutch bag verde chiaro lato 2">
+    <img src="borsa7c.jpg" alt="Clutch bag verde chiaro lato 3">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag verde chiaro con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag verde chiaro." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 8 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa8a.jpg" class="active" alt="Clutch bag senape lato 1">
+    <img src="borsa8b.jpg" alt="Clutch bag senape lato 2">
+    <img src="borsa8c.jpg" alt="Clutch bag senape lato 3">
+    <img src="borsa8d.jpg" alt="Clutch bag senape lato 4">
+    <img src="borsa8e.jpg" alt="Clutch bag senape lato 5">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag senape con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag senape." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 9 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa9a.jpg" class="active" alt="Clutch bag blu notte lato 1">
+    <img src="borsa9b.jpg" alt="Clutch bag blu notte lato 2">
+    <img src="borsa9c.jpg" alt="Clutch bag blu notte lato 3">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  <h3>
+  <em>Clutch bag blu notte con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag blu notte." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 10 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa10a.jpg" class="active" alt="Clutch bag bordeaux variante lato 1">
+    <img src="borsa10b.jpg" alt="Clutch bag bordeaux variante lato 2">
+    <img src="borsa10c.jpg" alt="Clutch bag bordeaux variante lato 3">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag bordeaux variante</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag bordeaux variante." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 11 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa11a.jpg" class="active" alt="Clutch bag nera con filo argento lato 1">
+    <img src="borsa11b.jpg" alt="Clutch bag nera con filo argento lato 2">
+    <img src="borsa11c.jpg" alt="Clutch bag con filo argento lato 3">
+    <img src="borsa11d.jpg" alt="Clutch bag con filo argento lato 4">
+    <img src="borsa11e.jpg" alt="Clutch bag con filo argento lato 5">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag nera con filo argento</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 24cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag nera con filo argento." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 12 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa12a.jpg" class="active" alt="Pochette bluette">
+    <img src="borsa12b.jpg" alt="Pochette bluette lato 2">
+    <img src="borsa12c.jpg" alt="Pochette bluette lato 3">
+    <img src="borsa12d.jpg" alt="Pochette bluette lato 4">
+    <img src="borsa12e.jpg" alt="Pochette bluette lato 5">
+    <img src="borsa12f.jpg" alt="Pochette bluette lato 6">
+    <img src="borsa12g.jpg" alt="Pochette bluette lato 7">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  <h3>
+  <em>Pochette Bluette</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 27cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Pochette bluette." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 13 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa13a.jpg" class="active" alt="Clutch bag marrone e beje scuro con tracolla">
+    <img src="borsa13b.jpg" alt="Clutch bag marrone e beje scuro con tracolla lato 2">
+    <img src="borsa13c.jpg" alt="Clutch bag marrone e beje scuro con tracolla lato 3">
+    <img src="borsa13d.jpg" alt="Clutch bag marrone e beje scuro con tracolla lato 4">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+   <h3>
+  <em>Clutch bag marrone e beje con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 25cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag marrone e beje con tracolla." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 14 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa14a.jpg" class="active" alt="Clutch bag corallo con tracolla">
+    <img src="borsa14b.jpg" alt="Clutch bag corallo con tracolla lato 2">
+    <img src="borsa14c.jpg" alt="Clutch bag corallo con tracolla lato 3">
+    <img src="borsa14d.jpg" alt="Clutch bag corallo con tracolla lato 4">
+    <img src="borsa14e.jpg" alt="Clutch bag corallo con tracolla lato 5">
+    <img src="borsa14f.jpg" alt="Clutch bag corallo con tracolla lato 6">
+    <img src="borsa14g.jpg" alt="Clutch bag corallo con tracolla lato 7">
+    <img src="borsa14h.jpg" alt="Clutch bag corallo con tracolla lato 8">
+    <img src="borsa14i.jpg" alt="Clutch bag corallo con tracolla lato 9">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  <h3>
+  <em>Clutch bag corallo con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 16cm, Base 22cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag corallo con tracolla." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 15 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa15a.jpg" class="active" alt="Clutch bag lilla con tracolla">
+    <img src="borsa15b.jpg" alt="Clutch bag lilla con tracolla lato 2">
+    <img src="borsa15c.jpg" alt="Clutch bag lilla con tracolla lato 3">
+    <img src="borsa15d.jpg" alt="Clutch bag lilla con tracolla lato 4">
+    <img src="borsa15e.jpg" alt="Clutch bag lilla con tracolla lato 5">
+    <img src="borsa15f.jpg" alt="Clutch bag lilla con tracolla lato 6">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  <h3>
+  <em>Clutch bag lilla con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 24,5cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag lilla con tracolla." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 16 -->
+<div class="borsa borsa-ultima">
+  <div class="carousel">
+    <img src="borsa16a.jpg" class="active" alt="Clutch bag beje con filo d'orato con tracolla">
+    <img src="borsa16b.jpg" alt="Clutch bag beje con filo d'orato con tracolla lato 2">
+    <img src="borsa16c.jpg" alt="Clutch bag beje con filo d'orato con tracolla lato 3">
+    <img src="borsa16d.jpg" alt="Clutch bag beje con filo d'orato con tracolla lato 4">
+    <img src="borsa16e.jpg" alt="Clutch bag beje con filo d'orato con tracolla lato 5">
+    <img src="borsa16f.jpg" alt="Clutch bag beje con filo d'orato con tracolla lato 6">
+    <img src="borsa16g.jpg" alt="Clutch bag beje con filo d'orato con tracolla lato 7">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  <h3>
+  <em>Clutch bag beje con filo d'orato con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 19cm, Base 26cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag beje con filo d'orato con tracolla." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+<!-- Borsa 17 -->
+<div class="borsa">
+  <div class="carousel">
+    <img src="borsa17a.jpg" class="active" alt="Clutch bag nera con tracolla">
+    <img src="borsa17b.jpg" alt="Clutch bag nera con tracolla lato 2">
+    <img src="borsa17c.jpg" alt="Clutch bag nera con tracolla lato 3">
+    <img src="borsa17d.jpg" alt="Clutch bag nera con tracolla lato 4">
+    <img src="borsa17e.jpg" alt="Clutch bag nera con tracolla lato 5">
+    <img src="borsa17f.jpg" alt="Clutch bag nera con tracolla lato 6">
+    <img src="borsa17g.jpg" alt="Clutch bag nera con tracolla lato 7">
+    <img src="borsa17h.jpg" alt="Clutch bag nera con tracolla lato 8">
+    <img src="borsa17i.jpg" alt="Clutch bag nera con tracolla lato 9">
+  </div>
+  <div class="carousel-buttons">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  <h3>
+  <em>Clutch bag nera con tracolla</em><br>
+  <span class="normal-text">Chiusura a molla 20cm, Base 26cm</span>
+</h3>
+  <a class="btn" href="https://wa.me/393922053364?text=Ciao Martina! Vorrei ordinare la Clutch bag nera con tracolla." target="_blank">💬 Ordina ora su WhatsApp</a>
+</div>
+
+</section>
+
+<section id="chi-sono" class="chi-sono">
+<h2>Chi sono ☀️</h2>
+<p>
+Ciao! Mi chiamo <strong>Martina</strong> e da poco ho iniziato a realizzare <strong>clutch bag all’uncinetto</strong>. 
+Tutto è nato dal desiderio di creare qualche regalo fatto a mano per le mie amiche, ma, borsa dopo borsa, 
+ho scoperto che lavorare all’uncinetto mi rilassa e mi appassiona davvero. 
+
+Così è nata <strong>TinaBorset</strong>, un piccolo spazio dove condividere questa nuova passione e le mie creazioni artigianali, 
+fatte con cura, amore e un tocco di fantasia. 🤎
+</p>
+<p style="font-style: italic;">Scrivimi per poter scegliere insieme il materiale e il colore della tua clutch bag 🧶</p>
+</section>
+
+<footer id="contatti">
+<div class="contatti">
+  <a href="https://wa.me/393922053364" target="_blank">📞 Contattami su WhatsApp</a>
+  <a href="https://www.instagram.com/leborsettedimartina?igsh=MXNkbXBwY2FoY210cg%3D%3D&utm_source=qr" target="_blank">📷 Seguimi su Instagram</a>
+</div>
+<p>© 2025 TinaBorset – Le Borsette di Martina</p>
+</footer>
+
+<script>
+// Fade-in dolce
+const borsette = document.querySelectorAll('.borsa');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+borsette.forEach(b => observer.observe(b));
+
+// Carosello
+document.querySelectorAll('.borsa').forEach(borsa => {
+  const carousel = borsa.querySelector('.carousel');
+  const imgs = carousel.querySelectorAll('img');
+  let current = 0;
+
+  const showImage = (index) => {
+    imgs.forEach(img => img.classList.remove('active'));
+    imgs[index].classList.add('active');
+  }
+
+  borsa.querySelector('.prev').addEventListener('click', () => {
+    current = (current - 1 + imgs.length) % imgs.length;
+    showImage(current);
+  });
+
+  borsa.querySelector('.next').addEventListener('click', () => {
+    current = (current + 1) % imgs.length;
+    showImage(current);
+  });
+
+  showImage(current);
+});
+</script>
+
+</body>
+</html>
